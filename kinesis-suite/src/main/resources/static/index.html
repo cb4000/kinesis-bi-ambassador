@@ -1,4 +1,6 @@
 <!DOCTYPE HTML>
+<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <html>
 <head>
     <title>Getting Started: Serving Web Content</title>
@@ -6,13 +8,48 @@
 </head>
 <body>
     <h2>New Fact</h2>
-    <form>
-        <label for="source">Source:</label><br>
-        <input type="text" id="source" name="source"><br>
-        <label for="when">When:</label><br>
-        <input type="text" id="when" name="when">
-        <label for="what">What:</label><br>
-        <input type="text" id="what" name="what">
-  </form>
+        <form method="post" id="myForm" class="pure-form"  >
+        <fieldset>
+            <legend>Create a new fact</legend>
+            <label for="source">Source:</label><br>
+            <input type="text" id="source" name="source"><br>
+            <label for="when">When:</label><br>
+            <input type="text" id="when" name="when"><br>
+            <label for="what">What:</label><br>
+            <input type="text" id="what" name="what"><br>
+            <button  class="pure-button pure-button-primary">Submit</button>
+        </fieldset>
+    </form>
 </body>
 </html>
+<script>
+
+    $('#myForm').submit(function(e){
+    e.preventDefault();
+    let source = document.getElementById('source').value;
+    let when = document.getElementById('when').value;
+    let what = document.getElementById('what').value;
+    $.ajax({
+        url:'/facts',
+        type:'post',
+        contentType: 'application/json',
+        data:JSON.stringify({
+        source: source,
+        when: when,
+        what: what,
+    }),
+        success:function(){
+            //whatever you wanna do after the form is successfully submitted
+        }
+    });
+});/*
+    var xhr = new XMLHttpRequest();
+    let yourUrl = "/facts";
+    xhr.open("POST", yourUrl, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send();
+  document.getElementById("demo").innerHTML = "YOU CLICKED ME!";
+  */
+
+
+</script>
